@@ -1,0 +1,66 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://resouces/models/untitled.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://resouces/models/water.obj" type="ArrayMesh" id=2]
+
+[sub_resource type="BoxShape" id=20]
+
+[sub_resource type="CubeMesh" id=2]
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.54902, 0.486275, 0.486275, 1 )
+
+[sub_resource type="BoxShape" id=4]
+
+[sub_resource type="CubeMesh" id=5]
+
+[sub_resource type="SpatialMaterial" id=6]
+albedo_color = Color( 0.486275, 0.27451, 0.0509804, 1 )
+
+[sub_resource type="BoxShape" id=7]
+
+[sub_resource type="CubeMesh" id=8]
+
+[sub_resource type="SpatialMaterial" id=9]
+albedo_color = Color( 0.988235, 0.721569, 0.0196078, 1 )
+
+[node name="Spatial" type="Spatial"]
+
+[node name="grass" type="MeshInstance" parent="."]
+mesh = ExtResource( 1 )
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="grass"]
+
+[node name="CollisionShape" type="CollisionShape" parent="grass/StaticBody"]
+shape = SubResource( 20 )
+
+[node name="stone" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.71678 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="StaticBody" type="StaticBody" parent="stone"]
+
+[node name="CollisionShape" type="CollisionShape" parent="stone/StaticBody"]
+shape = SubResource( 4 )
+
+[node name="dirt" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.44046 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 6 )
+
+[node name="StaticBody" type="StaticBody" parent="dirt"]
+
+[node name="CollisionShape" type="CollisionShape" parent="dirt/StaticBody"]
+shape = SubResource( 7 )
+
+[node name="sand" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.452 )
+mesh = SubResource( 8 )
+material/0 = SubResource( 9 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7.59009 )
+mesh = ExtResource( 2 )
+material/0 = null
