@@ -1,20 +1,19 @@
 extends KinematicBody
 
-enum{
-	PAUSED = 0
-	UNPAUSED = 1
-}
 var water = 100
 var life = 100
 var speed = 32
 var menu = false
-var jump = 80
+var jump = 70
 var gravity = 5
 var motion = Vector3()
 var mouse_sensitivity = 0.5
 onready var head = $Spatial
 const UP = Vector3(0,1,0)
 var pause = 0
+
+remote func _set_position(pos):
+	global_transform.origin = pos
 
 func _ready():
 	if menu == false:
@@ -30,9 +29,12 @@ func _input(event):
 			head.rotate_x(deg2rad(-event.relative.y * mouse_sensitivity))
 			head.rotation.x = clamp(head.rotation.x, deg2rad(-90), deg2rad(90))
 
-func _process(delta):
-#	if is_network_master():
-	motion = move_and_slide(motion,UP)
+func _physics_process(delta):
+	if motion != Vector3():
+		if is_network_master():
+			move_and_slide(motion * speed, Vector3.UP)
+			rpc_unreliable("_set_position", global_transform.origin)
+		
 	motion.x = 0
 	motion.z = 0
 	

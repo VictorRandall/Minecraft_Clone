@@ -1,7 +1,7 @@
 extends GridMap
 
 var random = RandomNumberGenerator.new()
-var mutiplier = 10
+var mutiplier = 15
 var divider = 8
 var chunk = 5
 var speed = 10
@@ -32,5 +32,11 @@ func create_world(x_trans,y_trans,z_trans,x_size,y_size,z_size):
 
 func _process(delta):
 	create_world(player.translation.x/divider-chunk,0,player.translation.z/divider-chunk,player.translation.x/divider+chunk,100,player.translation.z/divider+chunk)
-	noise.persistence = 15
-	
+	noise.persistence = 20
+	$DirectionalLight.rotation.x += 0.0001
+	if $WorldEnvironment.get_environment().get_sky().sun_latitude == 180:
+		$WorldEnvironment.get_environment().get_sky().sun_latitude = 0
+	else:
+		$WorldEnvironment.get_environment().get_sky().sun_latitude += 0.01
+	if Input.is_action_pressed("ui_cancel"):
+		get_tree().quit()

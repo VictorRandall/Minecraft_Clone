@@ -2,7 +2,12 @@
 
 [sub_resource type="ProceduralSky" id=1]
 ground_horizon_color = Color( 0.729412, 0.85098, 0.917647, 1 )
+sun_latitude = 180.0
 
 [resource]
 background_mode = 2
 background_sky = SubResource( 1 )
+ambient_light_color = Color( 1, 1, 1, 1 )
+auto_exposure_enabled = true
+ss_reflections_enabled = true
+glow_enabled = true
