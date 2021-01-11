@@ -138,9 +138,9 @@ __meta__ = {
 
 [node name="Button2" type="Button" parent="."]
 margin_left = 467.632
-margin_top = 447.658
+margin_top = 449.357
 margin_right = 543.631
-margin_bottom = 485.658
+margin_bottom = 487.357
 rect_scale = Vector2( 1.274, 1.274 )
 text = "join"
 __meta__ = {
