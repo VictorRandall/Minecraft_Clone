@@ -1,5 +1,14 @@
 extends GridMap
 
+var file = File.new()
+var data = {}
+var path = "res://worlds/world_data.json"
+var default_data = {
+	"blockidk": 100,
+	"block2": 100,
+	"block3": 100,
+	
+}
 var n = 45
 const GRASS = 0
 const STONE = 2
@@ -7,11 +16,12 @@ const DIRT = 1
 const SAND = 3
 var biomes_selected = 'flat'
 var random = RandomNumberGenerator.new()
-var mutiplier = 2
+var mutiplier = 5
 var divider = 8
 var chunk = 2
 var speed = 10
 onready var player = $KinematicBody
+onready var pos = $Position3D
 var noise = OpenSimplexNoise.new()
 #
 func _ready():
@@ -20,17 +30,29 @@ func _ready():
 	noise.seed = random.randi()
 	noise.persistence = 1
 	print("seed:", random.randi())
-	for x in range(-n, n):
-		for y in range(0, 100):
-			for z in range(-n, n):
-					if y < noise.get_noise_2d(x,z)*mutiplier+10:
-						if get_cell_item(x,y,z) == -1:
-							set_cell_item(x,y,z,GRASS)
-							set_cell_item(x,y-1,z,DIRT)
-							set_cell_item(x,y-9,z,STONE)
-							noise.persistence = 20
+#	for x in range(-n, n):
+#		for y in range(0, 100):
+#			for z in range(-n, n):
+#					if y < noise.get_noise_2d(x,z)*mutiplier+10:
+#						if get_cell_item(x,y,z) == -1:
+#							set_cell_item(x,y,z,GRASS)
+#							set_cell_item(x,y-1,z,DIRT)
+#							set_cell_item(x,y-9,z,STONE)
+#							noise.persistence = 20
 
-func create_world(x_start, y_start, z_start, x_end, y_end, z_end, biomes_name):
+func save_world_data(x_start, y_start, z_start, x_end, y_end, z_end, biomes_name):
+	
+	file.open(path, File.WRITE)
+	file.store_line(to_json(data))
+	file.close()
+	
+#	set_cell_item(x,y,z,GRASS)
+#	set_cell_item(x,y-1,z,DIRT)
+#	set_cell_item(x,y-9,z,STONE)
+#	noise.persistence = 10
+	
+
+func load_world_data(x_start, y_start, z_start, x_end, y_end, z_end, biomes_name):
 	for x in range(x_start, x_end):
 		for y in range(y_start, y_end):
 			for z in range(z_start, z_end):
@@ -42,6 +64,12 @@ func create_world(x_start, y_start, z_start, x_end, y_end, z_end, biomes_name):
 					}
 				if y < biomes[biomes_name]*mutiplier+10:
 					if get_cell_item(x,y,z) == -1:
+						
+						
+						file.open(path, File.WRITE)
+						file.store_line(to_json(data))
+						file.close()
+						
 						set_cell_item(x,y,z,GRASS)
 						set_cell_item(x,y-1,z,DIRT)
 						set_cell_item(x,y-9,z,STONE)
@@ -57,10 +85,16 @@ func create_world(x_start, y_start, z_start, x_end, y_end, z_end, biomes_name):
 
 
 func _process(delta):
-#	create_world(player.translation.x/divider-chunk, 0, player.translation.z/divider-chunk, player.translation.x/divider+chunk+1, 100, player.translation.z/divider+chunk+1, biomes_selected)
-	
+#	create_world(player.translation.x/divider-chunk-1, 0, player.translation.z/divider-chunk-1, player.translation.x/divider+chunk, 100, player.translation.z/divider+chunk, biomes_selected)
+	if player.translation.y <= 0:
+		 player.life = 0
+		
 	var Block = world_to_map(player.VectorBlock)
-	set_cell_item(Block.x,Block.y,Block.z,-1) 
+#	set_cell_item(Block.x,Block.y,Block.z,-1) 
+	if player.ded == true:
+		player.translation = pos.translation
+		player.life = 100
+		
 	
 	$DirectionalLight.rotation.x += 0.0001
 	if $WorldEnvironment.get_environment().get_sky().sun_latitude == 180:

@@ -1,8 +1,13 @@
 extends KinematicBody
 
+onready var life_bar = $Control/TextureProgress
+onready var thirst_bar = $Control/TextureProgress2
+onready var hunger_bar = $Control/TextureProgress3
 onready var raycast = $Spatial/RayCast
+var ded = false
 var VectorBlock = Vector3()
-var water = 100
+var thirst = 100
+var hunger = 100
 var life = 100
 var speed = 32
 var menu = false
@@ -32,17 +37,16 @@ func _input(event):
 			head.rotation.x = clamp(head.rotation.x, deg2rad(-90), deg2rad(90))
 
 func _physics_process(delta):
-#	if motion != Vector3():
-#		if is_network_master():
 	move_and_slide(motion, Vector3.UP)
-#			rpc_unreliable("_set_position", global_transform.origin)
-		
 	motion.x = 0
 	motion.z = 0
 	
+	life_bar.value = life
+	thirst_bar.value = thirst
+	hunger_bar.value = hunger
+	
 	if Input.is_action_pressed("ui_left_click"):
-		if raycast.is_colliding():
-			VectorBlock = raycast.get_collision_point()
+		VectorBlock = raycast.get_collision_point()
 		
 	
 	if not is_on_floor():
@@ -83,7 +87,7 @@ func _physics_process(delta):
 		$CollisionShape.scale.y = 1
 		$CollisionShape.translation.y = 0
 		
-	
-	
-	
-	
+	if life == 0:
+		ded = true
+	else:
+		ded = false
