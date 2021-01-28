@@ -15,12 +15,11 @@ func _ready():
 	for x in range(-n, n):
 		for y in range(0, 100):
 			for z in range(-n-10, 5):
-					if y < noise.get_noise_2d(x,z)*mutiplier+10:
-						if blocks.get_cell_item(x,y,z) == -1:
-							blocks.set_cell_item(x,y,z,0)
+				if blocks.get_cell_item(x,0+noise.get_noise_2d(x,z)*mutiplier+3,z) == -1:
+					blocks.set_cell_item(x,0+noise.get_noise_2d(x,z)*mutiplier+3,z,0)
 #							set_cell_item(x,y-1,z,DIRT)
 #							set_cell_item(x,y-9,z,STONE)
-							noise.persistence = 20
+					noise.persistence = 20
 	get_tree().connect("network_peer_connected", self, "_player_connected")
 
 
