@@ -4,7 +4,7 @@ var motion = Vector3()
 var speed = 10
 var run = false
 var acelerate
-var gravity = 1
+var gravity = 1.5
 
 onready var cam = get_node("Spatial")
 
@@ -22,12 +22,12 @@ func _input(event):
 func _physics_process(delta):
 	motion.x = 0
 	motion.z = 0
-	motion.y -= gravity
+	
 	#conditions
 	if is_on_floor():
 		motion.y = 0
-#	else:
-#		pass
+	else:
+		motion.y -= gravity
 #	rpc_unreliable()
 	#Inputs
 	if Input.is_action_pressed("ui_right"):
@@ -44,6 +44,6 @@ func _physics_process(delta):
 		speed = 5
 	if is_on_floor():
 		if Input.is_action_pressed("ui_jump"):
-			motion.y += 15
+			motion.y = 30
 	
 	motion = move_and_slide(motion,Vector3(0,1,0))

@@ -1,6 +1,6 @@
 extends Control
 
-onready var blocks = $GridMap
+onready var b = $GridMap
 var mutiplier = 5
 var n = 40
 var Vector = Vector2()
@@ -12,14 +12,20 @@ func _process(delta):
 #	$Camera.translation.y = noise.get_noise_2dv(Vector)
 	
 func _ready():
+	randomize()
+	noise.seed = randi()
 	for x in range(-n, n):
 		for y in range(0, 100):
 			for z in range(-n-10, 5):
-				if blocks.get_cell_item(x,0+noise.get_noise_2d(x,z)*mutiplier+3,z) == -1:
-					blocks.set_cell_item(x,0+noise.get_noise_2d(x,z)*mutiplier+3,z,0)
+				if b.get_cell_item(x,0+noise.get_noise_2d(x,z)*10+6,z) == -1:
+					b.set_cell_item(x,0+noise.get_noise_2d(x,z)*10+6,z,0)
 #							set_cell_item(x,y-1,z,DIRT)
 #							set_cell_item(x,y-9,z,STONE)
-					noise.persistence = 20
+#	for x in range(-n, n):
+#			for z in range(start_z,end_z):
+#				if not b.get_cell_item(x,10,z) >= 0:
+#					b.set_cell_item(x,10,z,0)
+#					noise.persistence = 64
 	get_tree().connect("network_peer_connected", self, "_player_connected")
 
 
