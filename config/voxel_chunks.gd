@@ -10,62 +10,7 @@ var z
 var chunk_size
 var should_remove = true
 var data = {}
-var faces = {
-	top = {
-		v1 = Vector3(0,4,0),
-		v2 = Vector3(4,4,0),
-		v3 = Vector3(0,4,4),
-		
-		v4 = Vector3(0,4,4),
-		v5 = Vector3(4,4,0),
-		v6 = Vector3(4,4,4),
-	},
-	botton = {
-		v1 = Vector3(0,0,4),
-		v2 = Vector3(4,0,0),
-		v3 = Vector3(0,0,0),
-		
-		v4 = Vector3(4,0,4),
-		v5 = Vector3(4,0,0),
-		v6 = Vector3(0,0,4),
-	},
-	left = {
-		v1 = Vector3(4,0,0),
-		v2 = Vector3(4,0,4),
-		v3 = Vector3(4,4,0),
-		
-		v4 = Vector3(4,0,4),
-		v5 = Vector3(4,4,4),
-		v6 = Vector3(4,4,0),
-	},
-	right = {
-		v1 = Vector3(4,4,0),
-		v2 = Vector3(4,0,4),
-		v3 = Vector3(4,0,0),
-		
-		v4 = Vector3(4,4,0),
-		v5 = Vector3(4,0,4),
-		v6 = Vector3(4,4,4),
-	},
-	front = {
-		v1 = Vector3(),
-		v2 = Vector3(),
-		v3 = Vector3(),
-		
-		v4 = Vector3(),
-		v5 = Vector3(),
-		v6 = Vector3(),
-	},
-	back = {
-		v1 = Vector3(),
-		v2 = Vector3(),
-		v3 = Vector3(),
-		
-		v4 = Vector3(),
-		v5 = Vector3(),
-		v6 = Vector3(),
-	},
-}
+
 
 func _init(noise_seed, x, z, chunk_size):
 	self.x = x
@@ -135,13 +80,29 @@ func cube_faces(st: SurfaceTool,s):
 	st.add_vertex(Vector3(s,s,s))
 	st.add_vertex(Vector3(s,s,0))
 	#right
-	st.add_vertex(Vector3(s-s,s,0))
-	st.add_vertex(Vector3(s-s,0,s))
-	st.add_vertex(Vector3(s-s,0,0))
-
-	st.add_vertex(Vector3(s-s,s,s))
-	st.add_vertex(Vector3(s-s,0,s))
-	st.add_vertex(Vector3(s-s,s,0))
+	st.add_vertex(Vector3(0,s,0))
+	st.add_vertex(Vector3(0,0,s))
+	st.add_vertex(Vector3(0,0,0))
+	
+	st.add_vertex(Vector3(0,s,s))
+	st.add_vertex(Vector3(0,0,s))
+	st.add_vertex(Vector3(0,s,0))
+	#front
+	st.add_vertex(Vector3(0,0,s))
+	st.add_vertex(Vector3(0,s,s))
+	st.add_vertex(Vector3(s,0,s))
+	
+	st.add_vertex(Vector3(s,0,s))
+	st.add_vertex(Vector3(0,s,s))
+	st.add_vertex(Vector3(s,s,s))
+	#back
+	st.add_vertex(Vector3(s,0,0))
+	st.add_vertex(Vector3(0,s,0))
+	st.add_vertex(Vector3(0,0,0))
+	
+	st.add_vertex(Vector3(s,s,0))
+	st.add_vertex(Vector3(0,s,0))
+	st.add_vertex(Vector3(s,0,0))
 
 
 

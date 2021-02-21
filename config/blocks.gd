@@ -17,7 +17,7 @@ func _ready():
 	
 	
 func add_chunk(x, z):
-	var key = str(x) + "," + str(0) + "," + str(z)
+	var key = str(x) + "," + str(z)
 	
 	# check if chunk already exists or if it is in the unready_chunks (going to exist)
 	if chunks.has(key) or unready_chunks.has(key):
